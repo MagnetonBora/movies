@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Actors</h1>
+    <table>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>email</th>
+            <th>phone</th>
+            <th>salary</th>
+        </tr>
+        {% for actor in object_list %}
+            <tr>
+                <td>{{ actor.first_name }}</td>
+                <td>{{ actor.last_name }}</td>
+                <td>{{ actor.email }}</td>
+                <td>{{ actor.phone }}</td>
+                <td>{{ actor.salary }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
