@@ -1,0 +1,62 @@
+version: "3.9"
+services:
+  app:
+    image: "movies:latest"
+    ports:
+      - "8000:8000"
+    command: >
+      bash -c "
+        sleep 20 &&
+        python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - MOVIES_DATABASE_HOST=postgres
+      - MOVIES_DATABASE_PORT=5432
+      - MOVIES_DATABASE_PASSWORD=secret
+      - MOVIES_DATABASE_USER=movies
+      - MOVIES_DATABASE_NAME=movies
+    depends_on:
+      - postgres
+      - migrations
+      - superuser
+  migrations:
+    image: "movies:latest"
+    command: >
+      bash -c "
+        sleep 20 &&  
+        python manage.py migrate"
+    depends_on:
+      - postgres
+    environment:
+      - MOVIES_DATABASE_HOST=postgres
+      - MOVIES_DATABASE_PORT=5432
+      - MOVIES_DATABASE_PASSWORD=secret
+      - MOVIES_DATABASE_USER=movies
+      - MOVIES_DATABASE_NAME=movies
+  superuser:
+    image: "movies:latest"
+    command: >
+      bash -c "
+        sleep 20 &&
+        python manage.py createsuperuser --no-input"
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@admin.com
+      - MOVIES_DATABASE_HOST=postgres
+      - MOVIES_DATABASE_PORT=5432
+      - MOVIES_DATABASE_PASSWORD=secret
+      - MOVIES_DATABASE_USER=movies
+      - MOVIES_DATABASE_NAME=movies
+    depends_on:
+      - postgres
+      - migrations
+  postgres:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_USER=movies
+      - POSTGRES_DB=movies
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
