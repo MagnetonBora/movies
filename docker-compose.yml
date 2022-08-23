@@ -17,7 +17,6 @@ services:
     depends_on:
       - postgres
       - migrations
-      - superuser
   migrations:
     image: "movies:latest"
     command: >
@@ -27,18 +26,6 @@ services:
     depends_on:
       - postgres
     environment:
-      - MOVIES_DATABASE_HOST=postgres
-      - MOVIES_DATABASE_PORT=5432
-      - MOVIES_DATABASE_PASSWORD=secret
-      - MOVIES_DATABASE_USER=movies
-      - MOVIES_DATABASE_NAME=movies
-  superuser:
-    image: "movies:latest"
-    command: >
-      bash -c "
-        sleep 20 &&
-        python manage.py createsuperuser --no-input"
-    environment:
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_PASSWORD=admin
       - DJANGO_SUPERUSER_EMAIL=admin@admin.com
@@ -47,9 +34,6 @@ services:
       - MOVIES_DATABASE_PASSWORD=secret
       - MOVIES_DATABASE_USER=movies
       - MOVIES_DATABASE_NAME=movies
-    depends_on:
-      - postgres
-      - migrations
   postgres:
     image: "postgres:latest"
     ports:
