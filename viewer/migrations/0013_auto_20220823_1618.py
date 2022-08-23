@@ -9,12 +9,12 @@ def generate_superuser(*args, **kwargs):
     username = os.environ.get("DJANGO_SUPERUSER_USERNAME")
     password = os.environ.get("DJANGO_SUPERUSER_PASSWORD")
     email = os.environ.get("DJANGO_SUPERUSER_EMAIL")
-    superuser = User.objects.create_superuser(
-        username=username,
-        email=email,
-        password=password
-    )
     try:
+        superuser = User.objects.create_superuser(
+            username=username,
+            email=email,
+            password=password
+        )
         superuser.save()
     except IntegrityError:
         print("admin user already exists in db")

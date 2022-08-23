@@ -22,7 +22,8 @@ services:
     command: >
       bash -c "
         sleep 20 &&  
-        python manage.py migrate"
+        python manage.py migrate &&
+        python manage.py shell < viewer/db/create_superuser.py"
     depends_on:
       - postgres
     environment:
