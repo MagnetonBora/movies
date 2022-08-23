@@ -6,6 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
+pgdata
 .idea/*
 
 # Distribution / packaging

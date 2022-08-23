@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -27,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'localhost'
+    'localhost',
+    '0.0.0.0'
 ]
 
 
@@ -81,11 +83,11 @@ WSGI_APPLICATION = 'hollymovies.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'movies',
-        'USER': 'movies',
-        'PASSWORD': 'secret',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.environ.get('MOVIES_DATABASE_NAME', 'movies'),
+        'USER': os.environ.get('MOVIES_DATABASE_USER', 'movies'),
+        'PASSWORD': os.environ.get('MOVIES_DATABASE_PASSWORD', 'secret'),
+        'HOST': os.environ.get('MOVIES_DATABASE_HOST', 'localhost'),
+        'PORT': os.environ.get('MOVIES_DATABASE_PORT', '5432')
     }
 }
 
