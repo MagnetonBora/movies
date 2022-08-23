@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 
 
 def generate_superuser(*args, **kwargs):
-    username = os.environ.get("DJANGO_SUPERUSER_USERNAME")
-    password = os.environ.get("DJANGO_SUPERUSER_PASSWORD")
-    email = os.environ.get("DJANGO_SUPERUSER_EMAIL")
+    username = os.environ.get("DJANGO_SUPERUSER_USERNAME", "admin")
+    password = os.environ.get("DJANGO_SUPERUSER_PASSWORD", "admin")
+    email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "admin@example.com")
     try:
         superuser = User.objects.create_superuser(
             username=username,

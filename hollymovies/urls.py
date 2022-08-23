@@ -9,7 +9,7 @@ from viewer.views import (
     ActorsView,
     ActorUpdateView,
     MovieCreateView,
-    ActorCreateView,
+    ActorCreateView, SubmittableLoginView,
 )
 
 admin.site.register(Genre)
@@ -19,6 +19,7 @@ admin.site.register(Movie)
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    path('accounts/login/', SubmittableLoginView.as_view(), name='login'),
     path('actors/', ActorsView.as_view(), name="actors"),
     path('actors/create', ActorCreateView.as_view()),
     path('actor/update/<pk>', ActorUpdateView.as_view()),
